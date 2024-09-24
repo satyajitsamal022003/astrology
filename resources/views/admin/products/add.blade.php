@@ -353,6 +353,11 @@
                                                 </fieldset>
                                             </div> <!-- end col -->
                                         </div>
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-md-4">
+                                                <a href="#product_image_tab" data-toggle="tab"><button class="btn btn-primary">Next</button></a>
+                                            </label>
+                                        </div>
                                     </div>
                                     <div class="tab-pane" id="product_image_tab">
                                         <div class="row">
@@ -547,6 +552,12 @@
 
                                             </div>
                                         </div>
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-md-4">                                                
+                                                <a href="#product_tab" data-toggle="tab"><button class="btn btn-info">Previous</button></a>
+                                                <a href="#product_description_tab" data-toggle="tab"><button class="btn btn-primary">Next</button></a>
+                                            </label>
+                                        </div>
                                     </div>
                                     <!--Description tab start-->
                                     <div class="tab-pane" id="product_description_tab">
@@ -586,13 +597,14 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-md-4">                                                
+                                                <a href="#product_image_tab" data-toggle="tab"><button class="btn btn-info">Previous</button></a>
+                                                <button type="submit" class="btn btn-primary"> Add Product </button>
+                                            </label>
+                                        </div>
                                     </div>
                                     <!--Description tab end-->
-                                    <div class="form-group row">
-                                        <label class="col-form-label col-md-4">
-                                            <button type="submit" class="btn btn-primary">Add Product</button>
-                                        </label>
-                                    </div>
                                 </div>
                             </form>
                         </div>
