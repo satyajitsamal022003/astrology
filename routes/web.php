@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -25,8 +26,18 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
 
     //category
     Route::get('/add-category', [CategoryController::class, 'addcat'])->name('admin.addcat');
-    Route::get('/store-category', [CategoryController::class, 'storecat'])->name('admin.storecat');
+    Route::post('/store-category', [CategoryController::class, 'storecat'])->name('admin.storecat');
     Route::get('/category-list', [CategoryController::class, 'listcat'])->name('admin.listcat');
+    Route::get('/category-edit/{id}', [CategoryController::class, 'editcat'])->name('admin.editcat');
+    Route::post('/update-categor/{id}', [CategoryController::class, 'updatecat'])->name('admin.updatecat');
+    Route::delete('/delete-categor/{id}', [CategoryController::class, 'deletecat'])->name('admin.deleteecat');
+
+
+
+    //subcategory
+    route::get('/list-subcat',[SubCategoryController::class,'listsubcat'])->name('admin.listsubcat');
+    route::get('/add-subcat',[SubCategoryController::class,'addsubcat'])->name('admin.addsubcat');
+    
 
     //Products
     Route::get('/add-product', [ProductController::class, 'addproduct'])->name('admin.addproduct');
