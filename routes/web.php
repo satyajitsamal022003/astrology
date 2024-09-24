@@ -37,6 +37,11 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     //subcategory
     route::get('/list-subcat',[SubCategoryController::class,'listsubcat'])->name('admin.listsubcat');
     route::get('/add-subcat',[SubCategoryController::class,'addsubcat'])->name('admin.addsubcat');
+    Route::post('/store-subcat', [SubCategoryController::class, 'storesubcat'])->name('admin.storesubcat');
+    Route::get('/edit-subcat/{id}', [SubCategoryController::class, 'editSubcat'])->name('admin.editSubcat');
+    Route::post('/update-subcat/{id}', [SubCategoryController::class, 'updateSubcat'])->name('admin.updateSubcat');
+    Route::delete('/delete-subcat/{id}', [SubCategoryController::class, 'deletesubcat'])->name('admin.deletesubcat');
+
     
 
     //Products
