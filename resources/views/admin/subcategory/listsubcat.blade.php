@@ -44,35 +44,25 @@
                                                 <td>{{ $subcategory->category ? $subcategory->category->categoryName : 'N/A' }}</td>
                                                 <td>{{ $subcategory->subCategoryName }}</td>
                                                 <td>
-                                                    <img src="{{ $subcategory->image ? asset($subcategory->image) : asset('assets/img/noImage.png') }}"
-                                                        alt="No Image" style="height: 35px" />
+                                                    <img src="{{ $subcategory->image ? asset($subcategory->image) : asset('assets/img/noImage.png') }}" alt="No Image" style="height: 35px" />
                                                 </td>
                                                 <td>{{ $subcategory->sortOrder }}</td>
                                                 <td>
                                                     <div class="onoffswitch">
-                                                        <input type="checkbox" class="onoffswitch-checkbox"
-                                                            id="on_top{{ $subcategory->id }}"
-                                                            {{ $subcategory->is_on_top ? 'checked' : '' }}>
-                                                        <label class="onoffswitch-label"
-                                                            for="on_top{{ $subcategory->id }}"></label>
+                                                        <input type="checkbox" class="onoffswitch-checkbox" id="on_top{{ $subcategory->id }}" {{ $subcategory->onTop ? 'checked' : '' }} onchange="subcategoryOnTop({{ $subcategory->id }})">
+                                                        <label class="onoffswitch-label" for="on_top{{ $subcategory->id }}"></label>
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="onoffswitch">
-                                                        <input type="checkbox" class="onoffswitch-checkbox"
-                                                            id="on_footer{{ $subcategory->id }}"
-                                                            {{ $subcategory->is_on_footer ? 'checked' : '' }}>
-                                                        <label class="onoffswitch-label"
-                                                            for="on_footer{{ $subcategory->id }}"></label>
+                                                        <input type="checkbox" class="onoffswitch-checkbox" id="on_footer{{ $subcategory->id }}" {{ $subcategory->onFooter ? 'checked' : '' }} onchange="subcategoryOnFooter({{ $subcategory->id }})">
+                                                        <label class="onoffswitch-label" for="on_footer{{ $subcategory->id }}"></label>
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="onoffswitch">
-                                                        <input type="checkbox" class="onoffswitch-checkbox"
-                                                            id="status{{ $subcategory->id }}"
-                                                            {{ $subcategory->status ? 'checked' : '' }}>
-                                                        <label class="onoffswitch-label"
-                                                            for="status{{ $subcategory->id }}"></label>
+                                                        <input type="checkbox" class="onoffswitch-checkbox" id="status{{ $subcategory->id }}" {{ $subcategory->status ? 'checked' : '' }} onchange="subcategoryStatus({{ $subcategory->id }})">
+                                                        <label class="onoffswitch-label" for="status{{ $subcategory->id }}"></label>
                                                     </div>
                                                 </td>
                                                 <td class="center action">
@@ -93,7 +83,6 @@
                                             </tr>
                                         @endforeach
                                     </tbody>
-
                                 </table>
                             </div>
                         </div>
@@ -103,14 +92,10 @@
         </div>
     </div>
 
-    <!-- Confirm Delete Script -->
-    <script>
-        function confirmDelete(subcategoryId) {
-            if (confirm('Are you sure you want to delete this subcategory?')) {
-                document.getElementById('delete-form-' + subcategoryId).submit();
-            }
-        }
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <script>    
         $(document).ready(function() {
             var table = $('.datatable').DataTable();    
             if (table) {
@@ -125,6 +110,80 @@
                     { "orderable": false, "targets": 'no-sort' }
                 ]
             });
+
+            function confirmDelete(subcategoryId) {
+                if (confirm('Are you sure you want to delete this subcategory?')) {
+                    document.getElementById('delete-form-' + subcategoryId).submit();
+                }
+            }
+
+            function subcategoryOnTop(subcategoryId) { 
+                var isChecked = $('#on_top' + subcategoryId).is(':checked');
+                var ontop = isChecked ? 1 : 0;
+
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('admin.subcategoryOnTop') }}",
+                    data: {
+                        '_token': '{{ csrf_token() }}',
+                        'subcategoryId': subcategoryId,
+                        'ontop': ontop
+                    },
+                    success: function(response) {
+                        toastr.success(response.message);
+                    },
+                    error: function(xhr, status, error) {
+                        toastr.error('An error occurred: ' + error); 
+                    }
+                });
+            }
+
+            function subcategoryOnFooter(subcategoryId) { 
+                var isChecked = $('#on_footer' + subcategoryId).is(':checked');
+                var onfooter = isChecked ? 1 : 0;
+
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('admin.subcategoryOnFooter') }}",
+                    data: {
+                        '_token': '{{ csrf_token() }}',
+                        'subcategoryId': subcategoryId,
+                        'onfooter': onfooter
+                    },
+                    success: function(response) {
+                        toastr.success(response.message);
+                    },
+                    error: function(xhr, status, error) {
+                        toastr.error('An error occurred: ' + error); 
+                    }
+                });
+            }
+            
+            function subcategoryStatus(subcategoryId) { 
+                var isChecked = $('#status' + subcategoryId).is(':checked');
+                var status = isChecked ? 1 : 0;
+
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('admin.subcategoryStatus') }}",
+                    data: {
+                        '_token': '{{ csrf_token() }}',
+                        'subcategoryId': subcategoryId,
+                        'status': status
+                    },
+                    success: function(response) {
+                        toastr.success(response.message);
+                    },
+                    error: function(xhr, status, error) {
+                        toastr.error('An error occurred: ' + error); 
+                    }
+                });
+            }
+
+            window.subcategoryOnTop = subcategoryOnTop;
+            window.subcategoryOnFooter = subcategoryOnFooter;
+            window.subcategoryStatus = subcategoryStatus;
+            window.confirmDelete = confirmDelete;
         });
     </script>
 @endsection

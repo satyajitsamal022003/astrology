@@ -31,7 +31,9 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::get('/category-edit/{id}', [CategoryController::class, 'editcat'])->name('admin.editcat');
     Route::post('/update-categor/{id}', [CategoryController::class, 'updatecat'])->name('admin.updatecat');
     Route::delete('/delete-categor/{id}', [CategoryController::class, 'deletecat'])->name('admin.deleteecat');
-
+    Route::post('admin/toggleOnTop', [CategoryController::class, 'toggleOnTop'])->name('admin.toggleOnTop');
+    Route::post('admin/toggleOnFooter', [CategoryController::class, 'toggleOnFooter'])->name('admin.toggleOnFooter');
+    Route::post('admin/toggleOnStatus', [CategoryController::class, 'toggleOnStatus'])->name('admin.toggleOnStatus');
 
 
     //subcategory
@@ -40,16 +42,19 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::post('/store-subcat', [SubCategoryController::class, 'storesubcat'])->name('admin.storesubcat');
     Route::get('/edit-subcat/{id}', [SubCategoryController::class, 'editSubcat'])->name('admin.editSubcat');
     Route::post('/update-subcat/{id}', [SubCategoryController::class, 'updateSubcat'])->name('admin.updateSubcat');
-    Route::delete('/delete-subcat/{id}', [SubCategoryController::class, 'deletesubcat'])->name('admin.deletesubcat');
-
+    Route::delete('/delete-subcat/{id}', [SubCategoryController::class, 'deletesubcat'])->name('admin.deletesubcat');    
+    Route::post('admin/subcategoryOnTop', [SubCategoryController::class, 'subcategoryOnTop'])->name('admin.subcategoryOnTop');
+    Route::post('admin/subcategoryOnFooter', [SubCategoryController::class, 'subcategoryOnFooter'])->name('admin.subcategoryOnFooter');
+    Route::post('admin/subcategoryStatus', [SubCategoryController::class, 'subcategoryStatus'])->name('admin.subcategoryStatus');
     
-
     //Products
     Route::get('/add-product', [ProductController::class, 'addproduct'])->name('admin.addproduct');
-    Route::get('/store-product', [ProductController::class, 'storeproduct'])->name('admin.storeproduct');
+    Route::post('/store-product', [ProductController::class, 'storeproduct'])->name('admin.storeproduct');
     Route::get('/products-list', [ProductController::class, 'listproduct'])->name('admin.listproduct');
-
-    
+    Route::delete('/delete-product/{id}', [ProductController::class, 'deleteproduct'])->name('admin.deleteproduct');
+    Route::post('admin/productOnTop', [ProductController::class, 'productOnTop'])->name('admin.productOnTop');
+    Route::post('admin/productOnStatus', [ProductController::class, 'productOnStatus'])->name('admin.productOnStatus');
+    Route::post('admin/getSubCategory', [ProductController::class, 'getSubCategory'])->name('admin.getSubCategory');
 
 });
 

@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="{{url('/')}}/assets/css/style.css?=1">
     <!-- Datatables CSS -->
     <link rel="stylesheet" href="{{url('/')}}/assets/plugins/datatables/datatables.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
     <script src="{{url('/')}}/assets/js/jquery-3.2.1.min.js"></script>
 </head>
 
