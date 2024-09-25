@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class CategoryController extends Controller
 {
     public function listcat(){
-        $categories = Category::whereNotIn('status', [2])->get();
+        $categories = Category::whereNotIn('status', [2])->orderBy('id', 'desc')->get();
         return view('admin.category.listcat', compact('categories'));
 
     }

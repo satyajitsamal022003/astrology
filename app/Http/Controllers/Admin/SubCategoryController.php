@@ -11,7 +11,7 @@ class SubCategoryController extends Controller
 {
     public function listsubcat()
     {
-        $subcategories = SubCategory::whereNotIn('status', [2])->get();
+        $subcategories = SubCategory::whereNotIn('status', [2])->orderBy('id', 'desc')->get();
         return view('admin.subcategory.listsubcat', compact('subcategories'));
     }
     

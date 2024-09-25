@@ -12,7 +12,7 @@
                             <li class="breadcrumb-item active">Manage Sub Category</li>
                         </ul>
                     </div>
-                    <div class="panel-heading col-md-2">
+                    <div class="panel-heading col-md-3">
                         <a href="{{ route('admin.addsubcat') }}" class="btn btn-block btn-primary">Add Sub Category</a>
                     </div>
                 </div>
@@ -30,7 +30,6 @@
                                             <th>Category</th>
                                             <th>Sub Category</th>
                                             <th class="no-sort">Image</th>
-                                            {{-- <th class="no-sort">No Of Products</th> --}}
                                             <th>Sort Order</th>
                                             <th class="no-sort">On Top</th>
                                             <th class="no-sort">On Footer</th>
@@ -48,13 +47,12 @@
                                                     <img src="{{ $subcategory->image ? asset($subcategory->image) : asset('assets/img/noImage.png') }}"
                                                         alt="No Image" style="height: 35px" />
                                                 </td>
-                                                {{-- <td><a href="#">{{ $subcategory->products_count ?? 0 }}</a></td> --}}
                                                 <td>{{ $subcategory->sortOrder }}</td>
                                                 <td>
                                                     <div class="onoffswitch">
                                                         <input type="checkbox" class="onoffswitch-checkbox"
                                                             id="on_top{{ $subcategory->id }}"
-                                                            {{ $subcategory->status ? 'checked' : '' }}>
+                                                            {{ $subcategory->is_on_top ? 'checked' : '' }}>
                                                         <label class="onoffswitch-label"
                                                             for="on_top{{ $subcategory->id }}"></label>
                                                     </div>
@@ -63,7 +61,7 @@
                                                     <div class="onoffswitch">
                                                         <input type="checkbox" class="onoffswitch-checkbox"
                                                             id="on_footer{{ $subcategory->id }}"
-                                                            {{ $subcategory->onFooter ? 'checked' : '' }}>
+                                                            {{ $subcategory->is_on_footer ? 'checked' : '' }}>
                                                         <label class="onoffswitch-label"
                                                             for="on_footer{{ $subcategory->id }}"></label>
                                                     </div>
@@ -104,13 +102,29 @@
             </div>
         </div>
     </div>
+
+    <!-- Confirm Delete Script -->
     <script>
         function confirmDelete(subcategoryId) {
-            
             if (confirm('Are you sure you want to delete this subcategory?')) {
-            
                 document.getElementById('delete-form-' + subcategoryId).submit();
             }
         }
+    
+        $(document).ready(function() {
+            var table = $('.datatable').DataTable();    
+            if (table) {
+                table.destroy();
+            }
+            $('.datatable').DataTable({
+                "paging": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "columnDefs": [
+                    { "orderable": false, "targets": 'no-sort' }
+                ]
+            });
+        });
     </script>
 @endsection

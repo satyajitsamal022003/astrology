@@ -23,7 +23,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="datatable table table-stripped">
+                                <table id="categoryTable" class="datatable table table-stripped">
                                     <thead>
                                         <tr>
                                             <th class="no-sort">Sl No.</th>
@@ -76,10 +76,10 @@
                                                         <i class="fa-regular fa-trash-can"></i>
                                                     </button>
                                                 
-                                                    <!-- Hidden Form for Delete Request -->
+                                                    
                                                     <form id="delete-form-{{ $category->id }}" action="{{ route('admin.deleteecat', $category->id) }}" method="POST" style="display: none;">
                                                         @csrf
-                                                        @method('DELETE') <!-- Specify that this form will send a DELETE request -->
+                                                        @method('DELETE')
                                                     </form>
                                                 </td>
                                             </tr>
@@ -88,16 +88,31 @@
                                 </table>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
     <script type="text/javascript">
+        $(document).ready(function() {
+            if ($.fn.DataTable.isDataTable('#categoryTable')) {
+                $('#categoryTable').DataTable().destroy();
+            }
+
+            $('#categoryTable').DataTable({
+                "paging": true,
+                "ordering": true,
+                "info": true,
+                "columnDefs": [
+                    { "orderable": false, "targets": 'no-sort' }
+                ]
+            });
+        });
+
         function deleteCategory(id) {
             if (confirm('Are you sure you want to delete this category?')) {
-                document.getElementById('delete-form-' + id).submit(); // Submit the hidden form
+                document.getElementById('delete-form-' + id).submit(); 
             }
         }
     </script>
