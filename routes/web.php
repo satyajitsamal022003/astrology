@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\ActivationController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CourierController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProductController;
@@ -55,6 +57,25 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::post('admin/productOnTop', [ProductController::class, 'productOnTop'])->name('admin.productOnTop');
     Route::post('admin/productOnStatus', [ProductController::class, 'productOnStatus'])->name('admin.productOnStatus');
     Route::post('admin/getSubCategory', [ProductController::class, 'getSubCategory'])->name('admin.getSubCategory');
+
+
+    //activation 
+    Route::get('/add-activation', [ActivationController::class, 'addactivation'])->name('admin.addactivation');
+    Route::post('/store-activation', [ActivationController::class, 'storeactivation'])->name('admin.storeactivation');
+    Route::get('/activations-list', [ActivationController::class, 'listactivation'])->name('admin.listactivation');
+    Route::post('activations/status', [ActivationController::class, 'activationstatus'])->name('admin.activationstatus');
+    Route::get('/activations-edit/{id}', [ActivationController::class, 'editactivation'])->name('admin.editactivation');
+    Route::get('/delete-activations/{id}', [ActivationController::class, 'deleteactivation'])->name('admin.deleteactivation');
+    Route::post('/update-activations/{id}', [ActivationController::class, 'updateactivation'])->name('admin.updateactivation');
+
+    //Courier types
+    Route::get('/add-couriertype', [CourierController::class, 'addcouriertype'])->name('admin.addcouriertype');
+    Route::post('/store-couriertype', [CourierController::class, 'storecouriertype'])->name('admin.storecouriertype');
+    Route::get('/couriertypes-list', [CourierController::class, 'listcouriertype'])->name('admin.listcouriertype');
+    Route::post('couriertypes/status', [CourierController::class, 'couriertypestatus'])->name('admin.couriertypestatus');
+    Route::get('/couriertypes-edit/{id}', [CourierController::class, 'editcouriertype'])->name('admin.editcouriertype');
+    Route::get('/delete-couriertypes/{id}', [CourierController::class, 'deletecouriertype'])->name('admin.deletecouriertype');
+    Route::post('/update-couriertypes/{id}', [CourierController::class, 'updatecouriertype'])->name('admin.updatecouriertype');
 
 });
 
