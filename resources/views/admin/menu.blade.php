@@ -31,13 +31,22 @@
                          <span class="menu-arrow"></span></a>
                      <ul>
                          <li>
-                             <a href="category.html">Category</a>
+                             <a href="{{route('admin.listcat')}}">Category</a>
                          </li>
                          <li>
-                             <a href="subcategory.html">Sub Category</a>
+                             <a href="{{route('admin.listsubcat')}}">Sub Category</a>
                          </li>
                          <li>
                              <a href="{{route('admin.listproduct')}}">Products</a>
+                         </li>
+                         <li>
+                             <a href="{{route('admin.listactivation')}}">Activations</a>
+                         </li>
+                         <li>
+                             <a href="{{route('admin.listcouriertype')}}">Courier Types</a>
+                         </li>
+                         <li>
+                             <a href="{{route('admin.listproduct')}}">Certifications</a>
                          </li>
                      </ul>
                  </li>
@@ -76,8 +85,6 @@
                      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                          @csrf
                      </form>
-
-
                  </li>
              </ul>
          </div>

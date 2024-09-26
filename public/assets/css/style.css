@@ -4175,3 +4175,6 @@ table.table-inbox tbody tr.checked {
 .table td, .table th {
     vertical-align: middle;
 }
+.variant-item {
+    margin-bottom: 10px;
+}
