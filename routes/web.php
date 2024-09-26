@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\User\IndexController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -33,9 +34,12 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::get('/store-product', [ProductController::class, 'storeproduct'])->name('admin.storeproduct');
     Route::get('/products-list', [ProductController::class, 'listproduct'])->name('admin.listproduct');
 
-    
-
 });
+Route::get('/index', [IndexController::class, 'index'])->name('user.index');
+Route::get('/category-products/{id}', [IndexController::class, 'categorywiseproduct'])->name('user.categorywiseproduct');
+Route::get('/products-details/{prodid}', [IndexController::class, 'productdetails'])->name('user.productdetails');
+
+
 
 // Include authentication routes
 require __DIR__.'/auth.php';
