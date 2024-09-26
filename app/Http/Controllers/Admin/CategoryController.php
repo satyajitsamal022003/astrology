@@ -119,4 +119,28 @@ class CategoryController extends Controller
         return redirect()->route('admin.listcat')->with('success', 'Category status updated to inactive successfully!');
     }
 
+    public function toggleOnTop(Request $request) {
+        $category = Category::findOrFail($request->categoryId);
+        $category->onTop = $request->ontop;
+        $category->save();
+
+        return response()->json(['message' => 'Category on top updated successfully!', 'success' => true]);
+    }
+
+    public function toggleOnFooter(Request $request) {
+        $category = Category::findOrFail($request->categoryId);
+        $category->onFooter = $request->onfooter;
+        $category->save();
+
+        return response()->json(['message' => 'Category on footer updated successfully!', 'success' => true]);
+    }
+
+    public function toggleOnStatus(Request $request) {
+        $category = Category::findOrFail($request->categoryId);
+        $category->status = $request->status;
+        $category->save();
+
+        return response()->json(['message' => 'Category ststus updated successfully!', 'success' => true]);
+    }
+
 }

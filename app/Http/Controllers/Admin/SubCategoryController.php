@@ -112,4 +112,28 @@ class SubCategoryController extends Controller
         return redirect()->route('admin.listsubcat')->with('success', 'Sub Category status updated to inactive successfully!');
     }
 
+    public function subcategoryOnTop(Request $request) {
+        $subcategory = Subcategory::findOrFail($request->subcategoryId);
+        $subcategory->onTop = $request->ontop;
+        $subcategory->save();
+
+        return response()->json(['message' => 'Sub category on top updated successfully!', 'success' => true]);
+    }
+
+    public function subcategoryOnFooter(Request $request) {
+        $subcategory = Subcategory::findOrFail($request->subcategoryId);
+        $subcategory->onFooter = $request->onfooter;
+        $subcategory->save();
+
+        return response()->json(['message' => 'Sub category on footer updated successfully!', 'success' => true]);
+    }
+
+    public function subcategoryStatus(Request $request) {
+        $subcategory = Subcategory::findOrFail($request->subcategoryId);
+        $subcategory->status = $request->status;
+        $subcategory->save();
+
+        return response()->json(['message' => 'Sub category ststus updated successfully!', 'success' => true]);
+    }
+
 }

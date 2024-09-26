@@ -49,20 +49,20 @@
                                                 <td>{{ $category->sortOrder }}</td>
                                                 <td>
                                                     <div class="onoffswitch">
-                                                        <input type="checkbox" name="onoffswitch928" class="onoffswitch-checkbox" id="featured_productmyonoffswitch928{{ $category->id }}" tabindex="0" {{ $category->is_on_top ? 'checked' : '' }}>
-                                                        <label class="onoffswitch-label" for="featured_productmyonoffswitch928{{ $category->id }}"></label>
+                                                        <input type="checkbox" name="onoffswitch928" class="onoffswitch-checkbox" id="productOnTop{{ $category->id }}" tabindex="0" {{ $category->onTop ? 'checked' : '' }} onchange="toggleOnTop({{ $category->id }})">
+                                                        <label class="onoffswitch-label" for="productOnTop{{ $category->id }}"></label>
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="onoffswitch">
-                                                        <input type="checkbox" name="onoffswitch928" class="onoffswitch-checkbox" id="on_topmyonoffswitch928{{ $category->id }}" tabindex="0" {{ $category->is_on_footer ? 'checked' : '' }}>
-                                                        <label class="onoffswitch-label" for="on_topmyonoffswitch928{{ $category->id }}"></label>
+                                                        <input type="checkbox" name="onoffswitch928" class="onoffswitch-checkbox" id="productOnFooter{{ $category->id }}" tabindex="0" {{ $category->onFooter ? 'checked' : '' }} onchange="toggleOnFooter({{ $category->id }})">
+                                                        <label class="onoffswitch-label" for="productOnFooter{{ $category->id }}"></label>
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="onoffswitch">
-                                                        <input type="checkbox" name="onoffswitch928" class="onoffswitch-checkbox" id="myonoffswitch928{{ $category->id }}" tabindex="0" {{ $category->status ? 'checked' : '' }}>
-                                                        <label class="onoffswitch-label" for="myonoffswitch928{{ $category->id }}"></label>
+                                                        <input type="checkbox" name="onoffswitch928" class="onoffswitch-checkbox" id="productOnStatus{{ $category->id }}" tabindex="0" {{ $category->status ? 'checked' : '' }} onchange="toggleOnStatus({{ $category->id }})">
+                                                        <label class="onoffswitch-label" for="productOnStatus{{ $category->id }}"></label>
                                                     </div>
                                                 </td>
                                                 <td class="center action">
@@ -94,6 +94,9 @@
         </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
     <script type="text/javascript">
         $(document).ready(function() {
             if ($.fn.DataTable.isDataTable('#categoryTable')) {
@@ -108,12 +111,80 @@
                     { "orderable": false, "targets": 'no-sort' }
                 ]
             });
-        });
 
-        function deleteCategory(id) {
-            if (confirm('Are you sure you want to delete this category?')) {
-                document.getElementById('delete-form-' + id).submit(); 
+            function toggleOnTop(categoryId) { 
+                var isChecked = $('#productOnTop' + categoryId).is(':checked');
+                var ontop = isChecked ? 1 : 0;
+
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('admin.toggleOnTop') }}",
+                    data: {
+                        '_token': '{{ csrf_token() }}',
+                        'categoryId': categoryId,
+                        'ontop': ontop
+                    },
+                    success: function(response) {
+                        toastr.success(response.message);
+                    },
+                    error: function(xhr, status, error) {
+                        toastr.error('An error occurred: ' + error); 
+                    }
+                });
             }
-        }
+
+            function toggleOnFooter(categoryId) { 
+                var isChecked = $('#productOnFooter' + categoryId).is(':checked');
+                var onfooter = isChecked ? 1 : 0;
+
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('admin.toggleOnFooter') }}",
+                    data: {
+                        '_token': '{{ csrf_token() }}',
+                        'categoryId': categoryId,
+                        'onfooter': onfooter
+                    },
+                    success: function(response) {
+                        toastr.success(response.message);
+                    },
+                    error: function(xhr, status, error) {
+                        toastr.error('An error occurred: ' + error); 
+                    }
+                });
+            }
+            
+            function toggleOnStatus(categoryId) { 
+                var isChecked = $('#productOnStatus' + categoryId).is(':checked');
+                var status = isChecked ? 1 : 0;
+
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('admin.toggleOnStatus') }}",
+                    data: {
+                        '_token': '{{ csrf_token() }}',
+                        'categoryId': categoryId,
+                        'status': status
+                    },
+                    success: function(response) {
+                        toastr.success(response.message);
+                    },
+                    error: function(xhr, status, error) {
+                        toastr.error('An error occurred: ' + error); 
+                    }
+                });
+            }
+
+            window.toggleOnTop = toggleOnTop;
+            window.toggleOnFooter = toggleOnFooter;
+            window.toggleOnStatus = toggleOnStatus;
+            window.deleteCategory = deleteCategory;
+
+            function deleteCategory(id) {
+                if (confirm('Are you sure you want to delete this category?')) {
+                    document.getElementById('delete-form-' + id).submit(); 
+                }
+            }
+        });
     </script>
 @endsection
