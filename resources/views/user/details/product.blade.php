@@ -88,7 +88,7 @@
 
                                 <div class="extra-checkbox mt-3">
                                     <div class="data-check">
-                                        @php($activation = App\Models\Activation::where('id', $productdetails->activationId)->first())
+                                        @php($activation = App\Models\Activations::where('id', $productdetails->activationId)->first())
                                         <label>
                                             @if($activation && $activation->id == 1)
                                             (Free)

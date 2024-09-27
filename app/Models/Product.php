@@ -22,4 +22,9 @@ class Product extends Model
         'out_of_stock', 'imageAlt', 'imageTitle', 'imageCaption', 'imageDesc', 'status', 'featured_product', 
         'on_top', 'created_at', 'updated_at', 'default_product_heading4', 'default_product_description4'
     ];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'categoryId');
+    }
 }
