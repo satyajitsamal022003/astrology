@@ -39,6 +39,15 @@
                          <li>
                              <a href="{{route('admin.listproduct')}}">Products</a>
                          </li>
+                         <li>
+                             <a href="{{route('admin.listactivation')}}">Activations</a>
+                         </li>
+                         <li>
+                             <a href="{{route('admin.listcouriertype')}}">Courier Types</a>
+                         </li>
+                         <li>
+                             <a href="{{route('admin.listproduct')}}">Certifications</a>
+                         </li>
                      </ul>
                  </li>
                  <li class="">
@@ -76,8 +85,6 @@
                      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                          @csrf
                      </form>
-
-
                  </li>
              </ul>
          </div>

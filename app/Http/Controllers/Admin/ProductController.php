@@ -31,9 +31,10 @@ class ProductController extends Controller
             'image2' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'image3' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'variant' => 'nullable|array',
-            'is_variant' => 'nullable|boolean',
+            'is_variant' => 'nullable',
             'productName' => 'required|string|max:255',
         ]);
+
 
         $productData = $request->except(['_token']);
 
@@ -42,12 +43,12 @@ class ProductController extends Controller
         $productData['updated_at'] = now();
 
         $productData['icon'] = $this->uploadFile($request, 'icon', 'producticon');
-        $productData['image1'] = $this->uploadFile($request, 'image1', 'productimage');
-        $productData['image2'] = $this->uploadFile($request, 'image2', 'productimage');
-        $productData['image3'] = $this->uploadFile($request, 'image3', 'productimage');
+        $productData['image1'] = $this->uploadFile($request, 'image1', 'product');
+        $productData['image2'] = $this->uploadFile($request, 'image2', 'product');
+        $productData['image3'] = $this->uploadFile($request, 'image3', 'product');
 
         $productData['is_variant'] = $request->is_variant ? 1 : 0;
-        $productData['variant'] = $request->filled('variant') ? implode(",", $request->variant) : null;
+        $productData['variant'] = $request->filled('variant') ? json_encode($request->variant) : null;
 
         $productData['seoUrl'] = Str::slug($request->productName);
         Product::create($productData);
