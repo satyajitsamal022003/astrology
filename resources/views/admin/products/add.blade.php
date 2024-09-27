@@ -123,11 +123,11 @@
                                                         <div class="row">
                                                             <div class="col-lg-6">
                                                                 <label>Lower product range</label>
-                                                                <input type="number" class="form-control" id="" name="min_product_qty">
+                                                                <input type="number" class="form-control" id="min_product_qty" name="min_product_qty" oninput="validateProductRange()">
                                                             </div>
                                                             <div class="col-lg-6">
                                                                 <label>Higher product range</label>
-                                                                <input type="number" class="form-control" id="" name="max_product_qty">
+                                                                <input type="number" class="form-control" id="max_product_qty" name="max_product_qty" oninput="validateProductRange()">
                                                             </div>
                                                         </div>
                                                         <div class="row mt-2">
@@ -530,7 +530,7 @@
                 url: "{{ route('admin.getSubCategory') }}",
                 data: {
                     '_token': '{{ csrf_token() }}',
-                    'subCategoryId': subId
+                    'categoryId': subId
                 },
                 success: function(response) {
                     $('#subCategory').empty();
@@ -543,6 +543,18 @@
                     toastr.error('An error occurred: ' + error);
                 }
             });
+        }
+
+        function validateProductRange() {
+            var minQty = parseInt(document.getElementById('min_product_qty').value, 10);
+            var maxQty = parseInt(document.getElementById('max_product_qty').value, 10);
+
+            if (!isNaN(minQty) && !isNaN(maxQty)) {
+                if (minQty >= maxQty) {
+                    alert('The lower product range must be less than the higher product range.');
+                    document.getElementById('min_product_qty').value = '';
+                }
+            }
         }
 
         document.getElementById('icon').onchange = function(evt) {
@@ -578,6 +590,7 @@
         };
 
         window.getSubCategory = getSubCategory;
+        window.validateProductRange = validateProductRange;
     });
 </script>
 

@@ -58,7 +58,8 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::post('admin/productOnTop', [ProductController::class, 'productOnTop'])->name('admin.productOnTop');
     Route::post('admin/productOnStatus', [ProductController::class, 'productOnStatus'])->name('admin.productOnStatus');
     Route::post('admin/getSubCategory', [ProductController::class, 'getSubCategory'])->name('admin.getSubCategory');
-
+    Route::get('/product-edit/{id}', [ProductController::class, 'editproduct'])->name('admin.editproduct');
+    Route::post('/update-product/{id}', [ProductController::class, 'updateproduct'])->name('admin.editproductdata');
 
     //activation 
     Route::get('/add-activation', [ActivationController::class, 'addactivation'])->name('admin.addactivation');

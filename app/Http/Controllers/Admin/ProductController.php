@@ -56,6 +56,33 @@ class ProductController extends Controller
         return redirect()->route('admin.listproduct')->with('success', 'Product added successfully!');
     }
 
+    public function editproduct($id){
+        $categories = Category::where('status', 1)->get();
+        $productsData = Product::where('status', 1)->orderBy('id', 'desc')->get();
+        $product = Product::Find($id);
+        return view('admin.products.edit', compact('categories', 'productsData', 'product'));
+    }
+
+    public function updateproduct(Request $request, $id){
+        $request->validate([
+            'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image1' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image2' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        $product = Product::findOrFail($id);
+        $productData = $request->except(['_token']);
+        $productData['updated_at'] = now();
+        $productData['icon'] = $this->uploadFile($request, 'icon', 'producticon');
+        $productData['image1'] = $this->uploadFile($request, 'image1', 'product');
+        $productData['image2'] = $this->uploadFile($request, 'image2', 'product');
+        $productData['is_variant'] = $request->is_variant ? 1 : 0;
+        $productData['variant'] = $request->filled('variant') ? json_encode($request->variant) : null;
+        $productData['seoUrl'] = Str::slug($request->productName);
+        $product->update($productData);
+        return redirect()->route('admin.listproduct')->with('success','Product updated successfully!');
+    }
+
     private function uploadFile(Request $request, $fieldName, $path)
     {
         if ($request->hasFile($fieldName)) {
@@ -93,7 +120,7 @@ class ProductController extends Controller
     }
 
     public function getSubCategory(Request $request) {
-        $subcategorys = Subcategory::where('categoryId', $request->subCategoryId)->get();
+        $subcategorys = Subcategory::where('categoryId', $request->categoryId)->get();
 
         return response()->json(['message' => 'Sub Category', 'success' => true, 'data'=> $subcategorys]);
     }
