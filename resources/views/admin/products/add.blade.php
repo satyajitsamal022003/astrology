@@ -151,7 +151,7 @@
                                                             <label for="">Activation</label>
                                                             <select class="form-control" name="activationId">
                                                                 <option>--Select--</option>
-                                                                @foreach(App\Models\Activation::where('status',1)->get() as $activation)
+                                                                @foreach(App\Models\Activations::where('status',1)->get() as $activation)
                                                                 <option value="{{ $activation->id }}">{{ $activation->amount }}</option>
                                                                 @endforeach
                                                             </select>
