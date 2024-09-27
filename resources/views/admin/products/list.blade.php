@@ -60,7 +60,7 @@
                                                     </div>
                                                 </td>
                                                 <td class="center action">
-                                                    <a href="{{ route('admin.editcat', $product->id) }}" class="btn btn-sm bg-success mr-2">
+                                                    <a href="{{ route('admin.editproduct', $product->id) }}" class="btn btn-sm bg-success mr-2">
                                                         <i class="fa-solid fa-pencil"></i>
                                                     </a>
                                                     <a href="#" target="_blank" class="btn btn-sm bg-info mr-2">

@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\User\IndexController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -57,7 +58,8 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::post('admin/productOnTop', [ProductController::class, 'productOnTop'])->name('admin.productOnTop');
     Route::post('admin/productOnStatus', [ProductController::class, 'productOnStatus'])->name('admin.productOnStatus');
     Route::post('admin/getSubCategory', [ProductController::class, 'getSubCategory'])->name('admin.getSubCategory');
-
+    Route::get('/product-edit/{id}', [ProductController::class, 'editproduct'])->name('admin.editproduct');
+    Route::post('/update-product/{id}', [ProductController::class, 'updateproduct'])->name('admin.editproductdata');
 
     //activation 
     Route::get('/add-activation', [ActivationController::class, 'addactivation'])->name('admin.addactivation');
@@ -78,6 +80,11 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::post('/update-couriertypes/{id}', [CourierController::class, 'updatecouriertype'])->name('admin.updatecouriertype');
 
 });
+Route::get('/index', [IndexController::class, 'index'])->name('user.index');
+Route::get('/category-products/{id}', [IndexController::class, 'categorywiseproduct'])->name('user.categorywiseproduct');
+Route::get('/products-details/{prodid}', [IndexController::class, 'productdetails'])->name('user.productdetails');
+
+
 
 // Include authentication routes
 require __DIR__.'/auth.php';
